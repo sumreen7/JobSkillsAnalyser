@@ -64,6 +64,7 @@ Python 3.9+
 Internet connection
 Indeed.com accessible in your region
 
+---
 
 **Why not BeautifulSoup?**
 
