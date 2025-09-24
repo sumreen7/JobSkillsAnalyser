@@ -63,3 +63,29 @@ Change the number of postings:
 Python 3.9+
 Internet connection
 Indeed.com accessible in your region
+
+
+**Why not BeautifulSoup?**
+
+We didn’t use BeautifulSoup because:
+
+1. Indeed blocks static scraping easily
+- If you just fetch the raw HTML with requests and parse it using BeautifulSoup, you’ll often hit blank pages or CAPTCHA walls.
+- That’s what was happening when I got "no job cards found" — Indeed serves dynamic content that isn’t always visible in plain HTML.
+
+2. Playwright handles JavaScript rendering
+- Indeed loads many job details dynamically via JavaScript.
+- Playwright controls a real browser, so the page fully loads and you can reliably query job postings.
+
+3. Cleaner element targeting
+- Instead of parsing HTML trees with BeautifulSoup, Playwright lets us directly select elements (like div.job_seen_beacon) and extract text/attributes.
+- This reduces the risk of scraping empty content because Playwright “sees” what the browser sees.
+
+4. Avoid duplication
+- If we added BeautifulSoup on top of Playwright, it would just complicate things (we’d first render with Playwright, then re-parse with BeautifulSoup). Playwright’s selectors are powerful enough to replace the parsing step.
+
+** 💡 So: **
+Playwright = browser automation + scraping
+BeautifulSoup = static HTML parsing
+
+Since Indeed is highly dynamic, Playwright is the more reliable choice.
